@@ -1,0 +1,41 @@
+﻿<!-- Header -->
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@Config.CompanyName</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse text-center" id="navbarsExampleDefault" style="">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Главная<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Действия</a>
+                    <div class="dropdown-menu  text-center" aria-labelledby="dropdown01">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="dropdown-item" asp-controller="Note" asp-action="Edit" asp-route-id="">
+                                <button class="btn btn-success w-100" type="submit">Новая заметка</button>
+                            </a>
+                            <a class="dropdown-item">
+                                <form method="post" asp-controller="Account" asp-action="Logout">
+                                    <button class="btn btn-danger w-100" type="submit">Выход</button>
+                                </form>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Login">
+                                <button class="btn btn-info w-100">Вход</button>
+                            </a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Register">
+                                <button class="btn btn-primary w-100">Регистрация</button>
+                            </a>
+                        }
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

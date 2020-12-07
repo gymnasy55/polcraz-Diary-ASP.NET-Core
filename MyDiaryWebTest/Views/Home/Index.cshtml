@@ -1,0 +1,53 @@
+﻿@model MainViewModel
+
+<div class="text-center">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h1>Вы: @Model.User.UserName.Substring(0, Model.User.UserName.IndexOf("@"))</h1>
+        @if (Model.Notes.Any())
+        {
+            <div class="row">
+                @foreach (var note in Model.Notes)
+                {
+                    <div class="container col-md-6 col-sm-12 bg-light text-dark border border-dark my-1">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3>@note.Title</h3>
+                            </div>
+                            <div class="col-12">
+                                <p>@Html.Raw(note.Text)</p>
+                            </div>
+                            <div class="col-6 mt-auto">
+                                <a asp-controller="Note" asp-action="Edit" asp-route-id="@note.Id">
+                                    <button class="btn btn-warning w-75 my-2">Edit</button>
+                                </a>
+                            </div>
+                            <div class="col-6 mt-auto">
+                                <form id="form-@note.Id" asp-area="" asp-controller="Note" asp-action="Delete">
+                                    <input type="hidden" name="id" value="@note.Id"/>
+                                    <a href="#" onclick="document.getElementById('form-@note.Id').submit();">
+                                        <button class="btn btn-danger w-75 my-2">Delete</button>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div> 
+                }
+            </div>
+        }
+        else
+        {
+            <div class="container bg-light text-dark border border-dark my-1">
+                <h1>У вас еще ни одной заметки!</h1>
+                <h3>Желаете <a asp-controller="Note" asp-action="Edit" asp-route-id="">создать</a> вашу первую заметку?</h3>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="container bg-light text-dark border border-dark my-1">
+            <h1>Это главная страница!</h1>
+            <h3>Пожалуйста, <a asp-controller="Account" asp-action="Register">зарегистрируйтесь</a> или <a asp-controller="Account" asp-action="Login">войдите в аккаунт</a>!</h3>
+        </div>
+    }
+</div>
